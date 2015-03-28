@@ -73,6 +73,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 					case Activity.RESULT_OK:
 						Toast.makeText(MainActivity.this,
 								getResources().getText(R.string.send_success), Toast.LENGTH_SHORT).show();
+						et_number.setText("");
+						et_content.setText("");
 						break;
 					case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
 						Toast.makeText(MainActivity.this,

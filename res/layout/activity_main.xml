@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:text="@string/please_input_number"
         android:textSize="20sp"/>
-    <EditText 
+    <EditText
         android:singleLine="true"
         android:id="@+id/et_number"
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
         android:layout_below="@id/et_number"
         android:text="@string/please_input_message"
         android:textSize="20sp"/>
-    <EditText 
+    <EditText
         android:lines="5"
         android:id="@+id/et_content"
         android:layout_width="match_parent"
@@ -48,5 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_content"
         android:text="@string/send_message"/>
+
 
 </RelativeLayout>
