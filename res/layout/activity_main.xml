@@ -48,6 +48,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_content"
         android:text="@string/send_message"/>
-
+    
+    <ListView 
+        android:id="@+id/lv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignLeft="@id/bt_send"
+        android:layout_below="@id/bt_send">
+    </ListView>
 
 </RelativeLayout>

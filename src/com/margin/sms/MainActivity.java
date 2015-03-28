@@ -1,6 +1,7 @@
 package com.margin.sms;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
@@ -18,12 +19,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 	private EditText et_number;
 	private EditText et_content;
+	
+	private ArrayList<HashMap<String, Object>> list_items;
+	private ListView lv_msg;
+	private SimpleAdapter simpleAdapter;
 
 	private BroadcastReceiver br_send_sms, br_delivered_sms;
 
@@ -39,6 +46,17 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 		Button bt_send = (Button) findViewById(R.id.bt_send);
 		bt_send.setOnClickListener(this);
+		
+		list_items = new ArrayList<HashMap<String, Object>>();
+		lv_msg = (ListView) findViewById(R.id.lv_msg);
+		lv_msg.setAlwaysDrawnWithCacheEnabled(true);
+		simpleAdapter = new SimpleAdapter(
+				this, list_items,
+				R.layout.item,
+				new String[]{"item_title", "item_text"},
+				new int[]{R.id.item_title, R.id.item_text}
+				);
+		lv_msg.setAdapter(simpleAdapter);
 	}
 
 	@Override
@@ -132,6 +150,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 				Toast.makeText(getApplicationContext(),
 						getResources().getText(R.string.empty_content), Toast.LENGTH_LONG).show();
 			} else {
+				noteMessage(number, content);
 				new Thread(new SmsThread(number, content)).start();
 				Toast.makeText(MainActivity.this,
 						getResources().getText(R.string.sending), Toast.LENGTH_LONG).show();
@@ -142,6 +161,14 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		}
 	}
 	
+	private void noteMessage(String number, String content) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("item_title", "To:" + number);
+		map.put("item_text", content);
+		list_items.add(map);
+		simpleAdapter.notifyDataSetChanged();
+	}
+
 	private class SmsThread implements Runnable {
 		String number;
 		String content;
